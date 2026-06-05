@@ -1,0 +1,83 @@
+name: 🦊 Tuyul — Build APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build turi'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - debug
+
+jobs:
+  build:
+    name: Flutter APK Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Kodni yuklash
+        uses: actions/checkout@v4
+
+      - name: ☕ Java 17 o'rnatish
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🐦 Flutter o'rnatish
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Paketlarni yuklash
+        working-directory: tuyul
+        run: flutter pub get
+
+      - name: 🔍 Kodni tekshirish
+        working-directory: tuyul
+        run: flutter analyze --no-fatal-infos
+        continue-on-error: true
+
+      - name: 🏗️ APK build qilish (Release)
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        working-directory: tuyul
+        run: |
+          flutter build apk --release \
+            --target-platform android-arm,android-arm64,android-x64 \
+            --split-per-abi
+
+      - name: 🏗️ APK build qilish (Debug)
+        if: ${{ github.event.inputs.build_type == 'debug' }}
+        working-directory: tuyul
+        run: flutter build apk --debug
+
+      - name: 📤 APK fayllarini saqlash (Release)
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tuyul-apk-release
+          path: |
+            tuyul/build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+            tuyul/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          retention-days: 30
+
+      - name: 📤 APK fayllarini saqlash (Debug)
+        if: ${{ github.event.inputs.build_type == 'debug' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tuyul-apk-debug
+          path: tuyul/build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+      - name: ✅ Muvaffaqiyat
+        run: |
+          echo "================================================"
+          echo "  🦊 Tuyul APK muvaffaqiyatli build qilindi!"
+          echo "  Actions > bu workflow > Artifacts bo'limidan"
+          echo "  APK faylni yuklab oling."
+          echo "================================================"
