@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/providers/vocabulary_provider.dart';
-import '../../../core/models/models.dart';
 import '../widgets/word_card.dart';
 
 class VocabularyScreen extends StatefulWidget {
