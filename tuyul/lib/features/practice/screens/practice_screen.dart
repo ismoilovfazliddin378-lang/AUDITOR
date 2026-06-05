@@ -6,6 +6,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/providers/app_provider.dart';
 import '../../../core/providers/progress_provider.dart';
+import '../../../core/providers/vocabulary_provider.dart';
 import '../../../core/models/models.dart';
 import '../widgets/sentence_display.dart';
 import '../widgets/speech_button.dart';
@@ -146,11 +147,9 @@ class _PracticeScreenState extends State<PracticeScreen>
       },
       listenFor: const Duration(seconds: 15),
       pauseFor: const Duration(seconds: 3),
+      partialResults: true,
       localeId: 'en_US',
-      listenOptions: SpeechListenOptions(
-        partialResults: true,
-        cancelOnError: false,
-      ),
+      cancelOnError: false,
     );
   }
 

@@ -44,10 +44,12 @@ class AppTheme {
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.surface,
+        background: AppColors.background,
         error: AppColors.error,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onSurface: AppColors.textPrimary,
+        onBackground: AppColors.textPrimary,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(
         const TextTheme(
