@@ -2,20 +2,12 @@ name: 🦊 Tuyul — Build APK
 
 on:
   workflow_dispatch:
-    inputs:
-      build_type:
-        description: 'Build turi'
-        required: true
-        default: 'release'
-        type: choice
-        options:
-          - release
-          - debug
 
 jobs:
   build:
     name: Flutter APK Build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: 📥 Kodni yuklash
@@ -30,7 +22,7 @@ jobs:
       - name: 🐦 Flutter o'rnatish
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: '3.24.5'
           channel: 'stable'
           cache: true
 
@@ -38,46 +30,13 @@ jobs:
         working-directory: tuyul
         run: flutter pub get
 
-      - name: 🔍 Kodni tekshirish
+      - name: 🏗️ APK build
         working-directory: tuyul
-        run: flutter analyze --no-fatal-infos --no-fatal-warnings
-        continue-on-error: true
+        run: flutter build apk --release --no-shrink
 
-      - name: 🏗️ APK build qilish (Release)
-        if: ${{ github.event.inputs.build_type == 'release' }}
-        working-directory: tuyul
-        run: |
-          flutter build apk --release \
-            --target-platform android-arm,android-arm64,android-x64 \
-            --split-per-abi
-
-      - name: 🏗️ APK build qilish (Debug)
-        if: ${{ github.event.inputs.build_type == 'debug' }}
-        working-directory: tuyul
-        run: flutter build apk --debug
-
-      - name: 📤 APK fayllarini saqlash (Release)
-        if: ${{ github.event.inputs.build_type == 'release' }}
+      - name: 📤 APK yuklash
         uses: actions/upload-artifact@v4
         with:
-          name: tuyul-apk-release
-          path: |
-            tuyul/build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-            tuyul/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          name: Tuyul-APK
+          path: tuyul/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
-
-      - name: 📤 APK fayllarini saqlash (Debug)
-        if: ${{ github.event.inputs.build_type == 'debug' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: tuyul-apk-debug
-          path: tuyul/build/app/outputs/flutter-apk/app-debug.apk
-          retention-days: 7
-
-      - name: ✅ Muvaffaqiyat
-        run: |
-          echo "================================================"
-          echo "  🦊 Tuyul APK muvaffaqiyatli build qilindi!"
-          echo "  Actions > bu workflow > Artifacts bo'limidan"
-          echo "  APK faylni yuklab oling."
-          echo "================================================"
