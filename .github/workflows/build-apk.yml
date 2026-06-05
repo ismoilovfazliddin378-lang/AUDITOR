@@ -40,7 +40,7 @@ jobs:
 
       - name: 🔍 Kodni tekshirish
         working-directory: tuyul
-        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+        run: flutter analyze --no-fatal-infos
         continue-on-error: true
 
       - name: 🏗️ APK build qilish (Release)

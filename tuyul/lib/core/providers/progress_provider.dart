@@ -34,6 +34,7 @@ class ProgressProvider extends ChangeNotifier {
 
   Future<void> updateProgress(String levelCode, int sectionId, int sentenceIndex, int total) async {
     final key = _key(levelCode, sectionId);
+    final existing = _progress[key];
     final completed = sentenceIndex + 1;
 
     _progress[key] = ProgressModel(

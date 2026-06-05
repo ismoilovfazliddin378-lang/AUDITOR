@@ -46,7 +46,7 @@ List<SectionModel> getB1Sections() {
         SentenceModel(id: 38, uzbek: 'Sinov muddati boshlanadi.', english: 'The probation period starts.'),
         SentenceModel(id: 39, uzbek: 'Ko\'rsatkichlarim yaxshi.', english: 'My performance is good.'),
         SentenceModel(id: 40, uzbek: 'Boshlig\'im mamnun.', english: 'My boss is satisfied.'),
-        SentenceModel(id: 41, uzbek: 'Jamoa ruhi baland.', english: 'Team spirit is high.'),
+        SentenceModel(id: 41, uzbek: 'Jamoa ruhi baland.', english: 'Team spirit is high.'},
         SentenceModel(id: 42, uzbek: 'Hamkorlik muhim.', english: 'Collaboration is important.'),
         SentenceModel(id: 43, uzbek: 'Delegatsiya keldi.', english: 'The delegation has arrived.'),
         SentenceModel(id: 44, uzbek: 'Xalqaro hamkorlik.', english: 'International cooperation.'),
