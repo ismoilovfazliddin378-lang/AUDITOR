@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/providers/app_provider.dart';
 import '../../../core/providers/progress_provider.dart';
-import '../../../core/models/models.dart';
 import '../../sections/screens/sections_screen.dart';
 import '../../vocabulary/screens/vocabulary_screen.dart';
 import '../widgets/level_card.dart';
